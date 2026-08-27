@@ -5,7 +5,7 @@ describe("Formulario", () => {
 
     cy.contains("h1", "Consultoria").should("be.visible");
 
-    cy.get("#name").type("Teste");
+    cy.get("#name").type("Teste teste");
     cy.get("#email").type("teste@gmail.com");
     cy.get("#phone").type("11999999999");
     cy.get("#consultancyType").select("In Company");
@@ -35,7 +35,12 @@ describe("Formulario", () => {
         .should("be.checked");
     });
 
-    const tecnologias = [
+    cy.get('input[type="file"]')
+    .selectFile("cypress/fixtures/images.jpg", {force: true});
+
+    cy.get("#details").type("Esta é uma mensagem de teste.");
+
+    const tech = [
       "Java",
       "Spring Boot",
       "React",
@@ -44,9 +49,18 @@ describe("Formulario", () => {
       "Git",
       "GitHub",
     ];
-    tecnologias.forEach((tecnologia) => {
+    tech.forEach((tecnologia) => {
       cy.get("#technologies").type(tecnologia).type("{enter}");
     });
+
+    cy.contains('label', 'Li e aceito os termos de uso')
+    .find('input[type=checkbox]')
+    .check()
+    .should('be.checked')
+
+    cy.contains("button", "Enviar formulário").click();
+
+    cy.contains('.modal-header', 'Sucesso!');
 
     // cy.get('#message').type('Esta é uma mensagem de teste.')
   });
