@@ -21,7 +21,8 @@ describe('Login', () => {
     cy.visit('localhost:3000')
     cy.get('#password').type('4DM')
     cy.contains('button', 'Entrar').click()
-    cy.contains('Ei, não esqueça de digitar seu email!').should('be.visible')
+    cy.contains('Ei, não esqueça de digitar seu email!')
+    .should('be.visible').and('have.css', 'color', 'rgb(248, 113, 113)')
   })
   it.only('Login inválido, senha em branco', () => {
     cy.viewport(1920, 1080)
